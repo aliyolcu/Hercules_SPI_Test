@@ -20,6 +20,7 @@ C_SRCS += \
 ../source/errata_SSWF021_45.c \
 ../source/esm.c \
 ../source/gio.c \
+../source/het.c \
 ../source/notification.c \
 ../source/os_croutine.c \
 ../source/os_event_groups.c \
@@ -44,6 +45,7 @@ C_DEPS += \
 ./source/errata_SSWF021_45.d \
 ./source/esm.d \
 ./source/gio.d \
+./source/het.d \
 ./source/notification.d \
 ./source/os_croutine.d \
 ./source/os_event_groups.d \
@@ -69,6 +71,7 @@ OBJS += \
 ./source/errata_SSWF021_45.obj \
 ./source/esm.obj \
 ./source/gio.obj \
+./source/het.obj \
 ./source/notification.obj \
 ./source/os_croutine.obj \
 ./source/os_event_groups.obj \
@@ -107,6 +110,7 @@ OBJS__QUOTED += \
 "source\errata_SSWF021_45.obj" \
 "source\esm.obj" \
 "source\gio.obj" \
+"source\het.obj" \
 "source\notification.obj" \
 "source\os_croutine.obj" \
 "source\os_event_groups.obj" \
@@ -136,6 +140,7 @@ C_DEPS__QUOTED += \
 "source\errata_SSWF021_45.d" \
 "source\esm.d" \
 "source\gio.d" \
+"source\het.d" \
 "source\notification.d" \
 "source\os_croutine.d" \
 "source\os_event_groups.d" \
@@ -176,6 +181,7 @@ C_SRCS__QUOTED += \
 "../source/errata_SSWF021_45.c" \
 "../source/esm.c" \
 "../source/gio.c" \
+"../source/het.c" \
 "../source/notification.c" \
 "../source/os_croutine.c" \
 "../source/os_event_groups.c" \

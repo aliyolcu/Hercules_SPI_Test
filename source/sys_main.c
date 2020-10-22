@@ -60,7 +60,7 @@
 #define    INTCAPA   (0x10)      // MCP23x17 Interrupt Captured Value for Port Register
 #define    INTCAPB   (0x11)      // READ ONLY: State of the Pin at the Time the Interrupt Occurred
 
-#define    GPIOA     (0x12)      // MCP23x17 GPIO Port Register
+#define    GPIOA     (0x12)      // MCP23x17 GPIO Port Register 0x12
 #define    GPIOB     (0x13)      // Value on the Port - Writing Sets Bits in the Output Latch
 
 #define    OLATA     (0x14)      // MCP23x17 Output Latch Register
@@ -99,13 +99,7 @@ uint16_t RX_Data_Slave[3];
 spiDAT1_t dataconfig1_t;
 
 void spiWrite( uint16_t data ){
-
-    gioSetBit(BTT1_IN1_PORT, BTT1_IN1_PIN, HIGH);
-    gioSetBit(BTT1_IN1_PORT, BTT1_IN1_PIN, LOW);
-
-    spiTransmitData(spiREG3, &dataconfig1_t, 1, (uint16_t*)&data);
-
-    gioSetBit(BTT1_IN1_PORT, BTT1_IN1_PIN, HIGH);
+    spiTransmitData(spiREG3, &dataconfig1_t, 1, &data);
 }
 
 void wordWrite(uint8_t reg, unsigned int word) {  // Accept the start register and word
@@ -140,7 +134,7 @@ void pinMode(unsigned int mode) {
   _modeCache = mode;
 }
 
-void digitalWrite(uint8_t pin, uint8_t value) {
+void spiOutput(uint8_t pin, uint8_t value) {
   if (pin < 1 | pin > 16) return;
   if (pin < 1 | pin > 16) return;
   if (value) {
@@ -153,8 +147,8 @@ void digitalWrite(uint8_t pin, uint8_t value) {
 
 void vTaskALL(void *pvParameters)
 {
-    dataconfig1_t.CS_HOLD = FALSE;
-    dataconfig1_t.WDEL    = TRUE;
+    dataconfig1_t.CS_HOLD = TRUE;
+    dataconfig1_t.WDEL    = FALSE;
     dataconfig1_t.DFSEL   = SPI_FMT_0;
     dataconfig1_t.CSNR    = 0xFE;
 
@@ -163,18 +157,35 @@ void vTaskALL(void *pvParameters)
     byteWrite(IOCON, ADDR_ENABLE);
     pinMode(0x0000);
 
+//    TX_Data_Slave[0] = ADDR_OPCODEW;
+//    TX_Data_Slave[1] = IOCON;
+//    TX_Data_Slave[2] = ADDR_ENABLE;
+//    spiTransmitAndReceiveData(spiREG3, &dataconfig1_t,3, TX_Data_Slave, RX_Data_Slave);
+//
+//    TX_Data_Slave[0] = ADDR_OPCODEW;
+//    TX_Data_Slave[1] = IODIRA;
+//    TX_Data_Slave[2] = 0x0000;
+//    spiTransmitAndReceiveData(spiREG3, &dataconfig1_t,3, TX_Data_Slave, RX_Data_Slave);
+
     while(1){
 
-        digitalWrite(1,1);
-        digitalWrite(2,1);
+//        TX_Data_Slave[0] = ADDR_OPCODEW;
+//        TX_Data_Slave[1] = GPIOA;
+//        TX_Data_Slave[2] = 0x01;
+//        spiTransmitAndReceiveData(spiREG3, &dataconfig1_t,3, TX_Data_Slave, RX_Data_Slave);
 //        vTaskDelay(100);
 //
-//        digitalWrite(1,0);
-//        digitalWrite(2,0);
+//        TX_Data_Slave[0] = ADDR_OPCODEW;
+//        TX_Data_Slave[1] = GPIOA;
+//        TX_Data_Slave[2] = 0x00;
+//        spiTransmitAndReceiveData(spiREG3, &dataconfig1_t,3, TX_Data_Slave, RX_Data_Slave);
 //        vTaskDelay(100);
-//
-//        gioToggleBit(BTT2_IN1_PORT, BTT2_IN1_PIN);
-//        vTaskDelay(100);
+
+        spiOutput(1,0);
+        vTaskDelay(100);
+
+        spiOutput(1,0);
+        vTaskDelay(100);
     }
 }
 
