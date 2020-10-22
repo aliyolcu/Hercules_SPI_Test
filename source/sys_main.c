@@ -25,10 +25,10 @@
 #define BTT2_IN1_PIN    2U
 
 #define BTT1_IN1_PORT   gioPORTA
-#define BTT1_IN1_PIN    3U
+#define BTT1_IN1_PIN    0U
 
-#define SPI_CS_PORT     spiPORT3
-#define SPI_CS_PIN      0U
+#define SPI_CS_PORT     spiPORT1
+#define SPI_CS_PIN      1U
 
 #define NUM_SSI_DATA    3
 
@@ -154,38 +154,50 @@ void vTaskALL(void *pvParameters)
 
     _enable_IRQ();
 
-    byteWrite(IOCON, ADDR_ENABLE);
-    pinMode(0x0000);
+//    byteWrite(IOCON, ADDR_ENABLE);
+//    pinMode(0x0000);
 
-//    TX_Data_Slave[0] = ADDR_OPCODEW;
-//    TX_Data_Slave[1] = IOCON;
-//    TX_Data_Slave[2] = ADDR_ENABLE;
-//    spiTransmitAndReceiveData(spiREG3, &dataconfig1_t,3, TX_Data_Slave, RX_Data_Slave);
-//
-//    TX_Data_Slave[0] = ADDR_OPCODEW;
-//    TX_Data_Slave[1] = IODIRA;
-//    TX_Data_Slave[2] = 0x0000;
-//    spiTransmitAndReceiveData(spiREG3, &dataconfig1_t,3, TX_Data_Slave, RX_Data_Slave);
+    gioSetBit(BTT1_IN1_PORT, BTT1_IN1_PIN, HIGH);
+    gioSetBit(BTT1_IN1_PORT, BTT1_IN1_PIN, LOW);
+    TX_Data_Slave[0] = ADDR_OPCODEW;
+    TX_Data_Slave[1] = IOCON;
+    TX_Data_Slave[2] = ADDR_ENABLE;
+    spiTransmitAndReceiveData(spiREG1, &dataconfig1_t,3, TX_Data_Slave, RX_Data_Slave);
+    gioSetBit(BTT1_IN1_PORT, BTT1_IN1_PIN, HIGH);
 
+    gioSetBit(BTT1_IN1_PORT, BTT1_IN1_PIN, HIGH);
+    gioSetBit(BTT1_IN1_PORT, BTT1_IN1_PIN, LOW);
+    TX_Data_Slave[0] = ADDR_OPCODEW;
+    TX_Data_Slave[1] = IODIRA;
+    TX_Data_Slave[2] = 0x0000;
+    spiTransmitAndReceiveData(spiREG1, &dataconfig1_t,3, TX_Data_Slave, RX_Data_Slave);
+    gioSetBit(BTT1_IN1_PORT, BTT1_IN1_PIN, HIGH);
     while(1){
 
-//        TX_Data_Slave[0] = ADDR_OPCODEW;
-//        TX_Data_Slave[1] = GPIOA;
-//        TX_Data_Slave[2] = 0x01;
-//        spiTransmitAndReceiveData(spiREG3, &dataconfig1_t,3, TX_Data_Slave, RX_Data_Slave);
+        gioSetBit(BTT1_IN1_PORT, BTT1_IN1_PIN, HIGH);
+        gioSetBit(BTT1_IN1_PORT, BTT1_IN1_PIN, LOW);
+        TX_Data_Slave[0] = ADDR_OPCODEW;
+        TX_Data_Slave[1] = GPIOA;
+        TX_Data_Slave[2] = 0xFF;
+        spiTransmitAndReceiveData(spiREG1, &dataconfig1_t,3, TX_Data_Slave, RX_Data_Slave);
+        gioSetBit(BTT1_IN1_PORT, BTT1_IN1_PIN, HIGH);
+        vTaskDelay(100);
+
+
+        gioSetBit(BTT1_IN1_PORT, BTT1_IN1_PIN, HIGH);
+        gioSetBit(BTT1_IN1_PORT, BTT1_IN1_PIN, LOW);
+        TX_Data_Slave[0] = ADDR_OPCODEW;
+        TX_Data_Slave[1] = GPIOA;
+        TX_Data_Slave[2] = 0x00;
+        spiTransmitAndReceiveData(spiREG1, &dataconfig1_t,3, TX_Data_Slave, RX_Data_Slave);
+        gioSetBit(BTT1_IN1_PORT, BTT1_IN1_PIN, HIGH);
+        vTaskDelay(100);
+
+//        spiOutput(1,0);
 //        vTaskDelay(100);
 //
-//        TX_Data_Slave[0] = ADDR_OPCODEW;
-//        TX_Data_Slave[1] = GPIOA;
-//        TX_Data_Slave[2] = 0x00;
-//        spiTransmitAndReceiveData(spiREG3, &dataconfig1_t,3, TX_Data_Slave, RX_Data_Slave);
+//        spiOutput(1,0);
 //        vTaskDelay(100);
-
-        spiOutput(1,0);
-        vTaskDelay(100);
-
-        spiOutput(1,0);
-        vTaskDelay(100);
     }
 }
 

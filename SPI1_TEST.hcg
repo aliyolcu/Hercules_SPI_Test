@@ -3,7 +3,7 @@
   <DEVICE>
     <family>TMS570LS04x</family>
     <device>TMS570LS0432PZ_FREERTOS</device>
-    <dilfile>SPI_INTERRUPT.dil</dilfile>
+    <dilfile>SPI1_TEST.dil</dilfile>
     <tools>ti</tools>
   </DEVICE>
   <VERSION>
@@ -28,15 +28,15 @@
       <HDRHET>
         <PATH>include\het.h</PATH>
       </HDRHET>
-      <SRCHET>
-        <PATH>source\het.c</PATH>
-      </SRCHET>
       <HDRHTU_R>
         <PATH>include\reg_htu.h</PATH>
       </HDRHTU_R>
       <HDRHTU>
         <PATH>include\htu.h</PATH>
       </HDRHTU>
+      <SRCHET>
+        <PATH/>
+      </SRCHET>
     </FILENAMES>
   </HET>
   <SYSTEM>
@@ -329,15 +329,13 @@
       <HDRHET>
         <NAME>het.h</NAME>
       </HDRHET>
-      <SRCHET>
-        <NAME>het.c</NAME>
-      </SRCHET>
       <HDRHTU_R>
         <NAME>reg_htu.h</NAME>
       </HDRHTU_R>
       <HDRHTU>
         <NAME>htu.h</NAME>
       </HDRHTU>
+      <SRCHET/>
       <HDRESM_R>
         <NAME>reg_esm.h</NAME>
       </HDRESM_R>
